@@ -39,7 +39,7 @@ router.post("/login", async (req, res) => {
   }
 
   try {
-    const user = await uModel.findBy(username);
+    const user = await uModel.findBy({ username });
     console.log(`login: `, user);
     if (user && bcrypt.compareSync(password, user.password)) {
       const token = tokenService.generateToken(user);
