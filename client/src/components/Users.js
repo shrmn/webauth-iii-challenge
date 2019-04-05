@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+import requireAuth from "../requireAuth";
+
 const Users = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(e => {
+    const endpoint = "/users";
+
     axios
-      .get("http://localhost:6500/api/users")
+      .get(endpoint)
       .then(res => {
         setUsers(res.data);
       })
@@ -29,4 +33,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default requireAuth(Users);
