@@ -30,7 +30,7 @@ router.post("/register", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-  let { username, password } = req.body;
+  const { username, password } = req.body;
 
   if (!username || !password) {
     return res.status(400).json({
@@ -40,6 +40,7 @@ router.post("/login", async (req, res) => {
 
   try {
     const user = await uModel.findBy(username);
+    console.log(`login: `, user);
     if (user && bcrypt.compareSync(password, user.password)) {
       const token = tokenService.generateToken(user);
       res.status(200).json({ message: "Successful log in", token });
@@ -49,7 +50,7 @@ router.post("/login", async (req, res) => {
       });
     }
   } catch (error) {
-    res.status(500).json({ error: `Error while loggin in: ${error}` });
+    res.status(500).json({ error: `Error while logging in: ${error}` });
   }
 });
 
